@@ -1,35 +1,21 @@
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify
 from flask_cors import CORS
-import joblib
 import os
-
-model = joblib.load("sentiment_model.pkl")
-vectorizer = joblib.load("tfidf.pkl")
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/', methods = ["GET"])
+@app.route("/")
 def root():
-    return jsonify({
-        "status": "ok"
-    })
+    return jsonify({"status": "ok"})
 
-@app.route("/hello", methods=["GET"])
+@app.route("/hello")
 def hello():
-    return jsonify({
-        "status": "ok",
-        "message": "Backend is working 🚀"
-    })
+    return jsonify({"message": "Backend is working 🚀"})
 
-@app.route("/predict", methods=["POST"])
-
-def predict():
-    data = request.get_json()
-    text = str(data.get("text", ""))
-    vec = vectorizer.transform([text])
-    pred = model.predict(vec)[0]
-    return jsonify({"sentiment": pred})
+@app.route("/favicon.ico")
+def favicon():
+    return "", 204
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
