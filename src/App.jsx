@@ -6,7 +6,7 @@ export default function App() {
   const [result, setResult] = useState("");
 
   const analyze = async () => {
-    const res = await fetch("http://127.0.0.1:5000/predict", {
+    const res = await fetch("https://sentimentbackend-production-9398.up.railway.app/predict", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text }),
